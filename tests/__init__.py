@@ -1,6 +1,5 @@
 import unittest
 from pylib.testutil import postgres
-from pylib.postgres import PostgresClient
 
 class ServiceTestCase(unittest.TestCase):
     @classmethod
