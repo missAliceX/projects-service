@@ -1,18 +1,15 @@
-import unittest
 import mock
 import asyncio
-from unittest.mock import create_autospec
 from src import service
 from tests import ServiceTestCase
-from pylib.postgres import PostgresClient
 from pylib.proto.threads_pb2_grpc import ThreadsServiceStub
 from pylib.proto.threads_pb2 import Thread, ThreadType, UpdateThreadsRequest
 
 
 class TestProjectsService(ServiceTestCase):
-    @mock.patch("src.service.PostgresClient.setup")
+    @mock.patch("src.service.PostgresClient.connect")
     @mock.patch("src.service.PostgresClient.migrate")
-    def test_new_service(self, migrate, setup):
+    def test_new_service(self, migrate, connect):
         # Creates a new service
         svc = service.Service(self.test_cfg)
 
@@ -20,7 +17,7 @@ class TestProjectsService(ServiceTestCase):
         self.assertIsInstance(svc.threads_cli, ThreadsServiceStub)
 
         # Ensures that Postgres is connected and migratiing properly
-        setup.assert_called_with(self.test_cfg)
+        connect.assert_called_with(self.test_cfg)
         migrate.assert_called_with('up')
 
     @mock.patch("pylib.service.http.Sanic")
@@ -33,9 +30,6 @@ class TestProjectsService(ServiceTestCase):
 
         # Ensure that we added routes
         svc.app.route.assert_called()
-
-        # Ensure that we established a consistent connection to Postgres
-        svc.app.add_task.assert_called_with(PostgresClient.connect_async)
 
     @mock.patch("pylib.service.http.Sanic")
     @mock.patch("src.service.update_project_details")

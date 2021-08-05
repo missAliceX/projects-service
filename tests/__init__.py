@@ -16,7 +16,5 @@ class ServiceTestCase(unittest.TestCase):
     
     @classmethod
     def tearDownClass(cls):
-        # Stops the connection to the Postgres container
-        PostgresClient.stop()
-        # Stops the Postgres container itself
-        postgres.stop(cls.container)
+        # Stops the Postgres container
+        postgres.stop()

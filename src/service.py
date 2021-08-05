@@ -18,7 +18,7 @@ class Service(HTTPService):
         self.threads_cli = ThreadsServiceStub(channel)
 
         # Connect to Postgres, sets up tables and types
-        PostgresClient.setup(cfg)
+        PostgresClient.connect(cfg)
         PostgresClient.migrate('up')
 
     def register(self):
@@ -28,9 +28,6 @@ class Service(HTTPService):
         self.app.route('/projects', methods=["GET"])(self.project_list)
         self.app.route('/projects/<id:int>',
                        methods=["GET"])(self.project_details)
-
-        # Keep a consistent connection to Postgres
-        self.app.add_task(PostgresClient.connect_async)
 
     async def project_list(self, req):
         """
