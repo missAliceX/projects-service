@@ -14,7 +14,7 @@ class Service(HTTPService):
         super().__init__("projects-service", cfg)
 
         # Sets up an insecure connection to our Threads micro-service
-        channel = grpc.insecure_channel("localhost:9090")
+        channel = grpc.insecure_channel(cfg["THREADS_SVC_HOST"])
         self.threads_cli = ThreadsServiceStub(channel)
 
         # Connect to Postgres, sets up tables and types
