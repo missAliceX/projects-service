@@ -1,1 +1,1 @@
-git+https://github.com/missAliceX/pylib.git@aeed901#egg=pylib
+git+https://github.com/missAliceX/pylib.git#egg=pylib
