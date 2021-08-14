@@ -61,4 +61,6 @@ class Service(HTTPService):
                 message=p,
             ) for p in req.json.get('solutions')]
         ))
-        return empty(status=200)
+        return json({
+            "project_id": project_id
+        })
