@@ -9,7 +9,7 @@ run:
 	python3 main.py
 
 resetdb:
-	docker rm -f postgres || true
+	make removedb
 	docker run --name postgres \
 		-p 5432:5432 \
 		-e POSTGRES_HOST=${POSTGRES_HOST} \
@@ -17,7 +17,9 @@ resetdb:
 		-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 		-e POSTGRES_DB=${POSTGRES_DB} \
 		-d postgres
-	sleep 3
+
+removedb:
+	docker rm -f postgres || true
 
 test:
 	coverage run -m pytest
