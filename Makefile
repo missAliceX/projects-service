@@ -26,6 +26,7 @@ test:
 	coverage report -m *.py src/*.py
 
 install:
+	pip install pip-upgrader
 	pip-upgrade *.txt
 	pip install --force-reinstall -U -r requirements.txt
 	pip install -r requirements.dev.txt
