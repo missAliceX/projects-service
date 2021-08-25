@@ -11,7 +11,7 @@ import grpc
 class Service(HTTPService):
     def __init__(self, cfg={}):
         # Calls __init__() of the HTTPService class
-        super().__init__("projects-service", cfg)
+        super().__init__("projects-service")
 
         # Sets up an insecure connection to our Threads micro-service
         channel = grpc.insecure_channel(cfg.get("THREADS_SVC_HOST", "localhost:9090"))
