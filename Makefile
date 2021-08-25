@@ -18,6 +18,12 @@ resetdb:
 		-e POSTGRES_DB=${POSTGRES_DB} \
 		-d postgres
 
+psql:
+	docker exec -ti postgres psql \
+		-d ${POSTGRES_DB} \
+		-U ${POSTGRES_USER} \
+		-h ${POSTGRES_HOST}
+
 removedb:
 	docker rm -f postgres || true
 
